@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  primary:
+    image: redis:latest
+    container_name: redis-primary
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+
+  reader:
+    image: redis:latest
+    container_name: redis-reader
+    ports:
+      - "6380:6379"  # Use a different port to avoid conflicts
+    command: redis-server --slaveof primary 6379  # Remove unnecessary address
